@@ -11,20 +11,44 @@ import akka.stream.ActorMaterializer
 
 import scala.io.StdIn
 
+import scala.collection.mutable.ArrayBuffer
+
+import com.rabbitmq.client.ConnectionFactory
+import com.rabbitmq.client.Connection
+import com.rabbitmq.client.Channel
+
+
 object Send extends App {
 
-  implicit  val system = ActorSystem("my-system")
+  implicit  val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
   implicit val executionContext = system.dispatcher
 
+  //namming the queeu
+  private val QUEUE_NAME = "hello"
+
+  //creating a connection to the server
+  val factory = new ConnectionFactory
+  factory.setHost("localhost")
+  val connection = factory.newConnection()
+  val channel = connection.createChannel
+
+  //creating a channel
+  channel.queueDeclare(QUEUE_NAME, false, false, false, null)
+  val message = "Hello World!"
+  channel.basicPublish("", QUEUE_NAME, null, message.getBytes)
+  System.out.println(" [x] Sent '" + message + "'")
+
+  channel.close()
+  connection.close()
   val routes =
     path("") {
       get {
-        val result = 6
+        val numbers = 2
         complete(HttpEntity(ContentTypes.`application/json`,
           s"""
              |{
-             |  "result": $result
+             |  "data": $message
               }
              |""".
             stripMargin))
