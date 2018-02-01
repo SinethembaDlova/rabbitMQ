@@ -1,28 +1,11 @@
 package messageQueue
 
-//import java.util.UUID
-//
-//import akka.actor.ActorSystem
-//import akka.http.scaladsl.Http
-//import akka.http.scaladsl.model._
-//import akka.http.scaladsl.server.Directives._
-//import akka.http.scaladsl.server._
-//import akka.stream.ActorMaterializer
-//
-//import scala.io.StdIn
-//
-//import scala.collection.mutable.ArrayBuffer
-
 import com.rabbitmq.client.ConnectionFactory
 import com.rabbitmq.client.Connection
 import com.rabbitmq.client.Channel
 
 
-object Send {
-
-//  implicit  val system = ActorSystem()
-//  implicit val materializer = ActorMaterializer()
-//  implicit val executionContext = system.dispatcher
+object Send extends App {
 
   //namming the queeu
   private val QUEUE_NAME = "hello"
@@ -41,22 +24,5 @@ object Send {
 
   channel.close()
   connection.close()
-//  val routes =
-//    path("") {
-//      get {
-//        val numbers = 2
-//        complete(HttpEntity(ContentTypes.`application/json`,
-//          s"""
-//             |{
-//             |  "data": $message
-//              }
-//             |""".
-//            stripMargin))
-//      }
-//    }
-//
-//  println(s"The server is running at http://localhost:3000/")
-//  println("To stop the server press Ctrl+C")
-//  sys.addShutdownHook(system.terminate())
-//  val bindingFuture = Http().bindAndHandle(routes, "localhost", 3000)
+
 }

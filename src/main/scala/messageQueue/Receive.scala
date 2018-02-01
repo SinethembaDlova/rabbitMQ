@@ -1,5 +1,7 @@
 package messageQueue
 
+import messageQueue.Send.{message}
+
 import com.rabbitmq.client.ConnectionFactory
 import com.rabbitmq.client.Connection
 import com.rabbitmq.client.Channel
@@ -29,5 +31,4 @@ object Receive extends App {
     }
   }
   channel.basicConsume(QUEUE_NAME, true, consumer)
-
 }
